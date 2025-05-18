@@ -1,2 +1,1 @@
-# Examples for *Free-Energy-of-Work Efficiency* (FWE)
-…(paste the README text from the previous message here)…
+Examples for *Fractal-Weighted Efficiency* (FWE)
