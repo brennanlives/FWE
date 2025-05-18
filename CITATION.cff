@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+title: "FWE_examples: Supplementary code and data"
+authors:
+  - family-names: O'Rear
+    given-names: Brennan
+date-released: 2025-05-18
+version: "1.0"
+license: MIT
+repository-code: https://github.com/brennanlives/FWE_examples
