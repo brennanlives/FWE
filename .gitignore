@@ -6,3 +6,6 @@ __pycache__/
 data/imaging_raw/
 .DS_Store
 .DS_Store
+
+# helper code kept outside the main tree
+external/mlperf_gpu/
