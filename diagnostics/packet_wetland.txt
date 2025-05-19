@@ -1,0 +1,9 @@
+results/eta_wetland.csv — fallback from slope sign
+  scale       eta   R   C
+     4 -0.273552 NaN NaN
+     8  2.132427 NaN NaN
+    16 -0.345855 NaN NaN
+    32 -0.187245 NaN NaN
+    64 -0.191483 NaN NaN
+   128 -0.180222 NaN NaN
+   256 -0.046165 NaN NaN
