@@ -3,7 +3,7 @@ from __future__ import annotations
 import pandas as pd
 from eta_core import eta_spectrum
 
-RAW = "data/ameriflux/US-Los/AMF_US-Los_BASE_HH_32-5.csv"
+RAW = "data/ameriflux/US-Los/AMF_US-Los_BIF_20230331.xlsx", sheet_name=0"
 OUT = "results/eta_wetland.csv"
 
 def main() -> None:
