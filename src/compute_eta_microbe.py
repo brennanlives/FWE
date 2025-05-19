@@ -13,9 +13,9 @@ else:
 
 print(f"reading  {in_csv}")
 df = pd.read_csv(in_csv)
-structure = df["Fitness"].values          # column present in the LTEE file
-energy    = np.arange(len(structure))     # placeholder; real joules req. later
+structure = pd.Series(df["Fitness"].values)
+energy    = pd.Series(np.arange(len(structure)))
 
 s, eta = eta_spectrum(structure, energy)
-pd.DataFrame({"scale": s, "eta": eta}).to_csv(out_csv, index=False)
+pd.DataFrame({"scale": list(s), "eta": list(eta)}).to_csv(out_csv, index=False)
 print(f"saved    {out_csv}")
