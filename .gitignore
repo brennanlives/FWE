@@ -10,3 +10,4 @@ data/imaging_raw/
 # helper code kept outside the main tree
 external/mlperf_gpu/
 data/**/*.csv
+backups/
