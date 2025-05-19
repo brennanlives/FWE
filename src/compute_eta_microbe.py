@@ -14,8 +14,10 @@ else:
 print(f"reading  {in_csv}")
 df = pd.read_csv(in_csv)
 structure = pd.Series(df["Fitness"].values)
-energy    = pd.Series(np.arange(len(structure)))
+s_len = len(structure)
+s      = np.arange(1, s_len+1)
+eta     = 1/s      # placeholder
 
 s, eta = eta_spectrum(structure, energy)
-pd.DataFrame({"scale": list(s), "eta": list(eta)}).to_csv(out_csv, index=False)
+pd.DataFrame({"scale": s, "eta": eta}).to_csv(out_csv, index=False)
 print(f"saved    {out_csv}")

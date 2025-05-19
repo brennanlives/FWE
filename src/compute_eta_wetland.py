@@ -3,12 +3,12 @@ from __future__ import annotations
 import pandas as pd
 from eta_core import eta_spectrum
 
-RAW = "data/ameriflux/US-Los/AMF_US-Los_BIF_20230331.xlsx"
+RAW = "data/ameriflux/US-Los/AMF_US-Los_BASE_HH_32-5.csv"
 OUT = "results/eta_wetland.csv"
 
 def main() -> None:
     # 1 ─ read the file, ignoring comment lines that start with “#”
-    df = pd.read_excel(RAW, comment="#", sheet_name=0)
+    df = pd.read_csv(RAW)
 
     # 2 ─ build a datetime index from TIMESTAMP_START (yyyymmddHHMM)
     df["time"] = pd.to_datetime(df["TIMESTAMP_START"], format="%Y%m%d%H%M")
