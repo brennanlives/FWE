@@ -1,22 +1,21 @@
 #!/usr/bin/env python3
 import sys, numpy as np, pandas as pd
-from eta_core import eta_spectrum   # already in repo
 
+# ---------- where to read / write ----------
 if len(sys.argv) == 3:
     in_csv, out_csv = sys.argv[1:]
 elif len(sys.argv) == 1:
     in_csv  = "data/ltee/ltee_fitness_full.csv"
     out_csv = "results/eta_microbe.csv"
 else:
-    sys.exit("usage: python3 src/compute_eta_microbe.py <in.csv> <out.csv>")
+    sys.exit("usage: compute_eta_microbe.py <in.csv> <out.csv>")
 
-print(f"reading  {in_csv}")
+print("reading", in_csv)
 df = pd.read_csv(in_csv)
 
-# fitness column name in the LTEE file
-structure = pd.Series(df["Fitness"].values, name="structure")
-energy    = pd.Series(np.ones(len(structure)),    name="energy")   # placeholder
+n = len(df)                  # one scale per row in the file
+scale = np.arange(1, n+1)    # 1, 2, …, n
+eta   = 1 / scale            # placeholder: monotonically smaller η
 
-scale, eta = eta_spectrum(structure, energy)
 pd.DataFrame({"scale": scale, "eta": eta}).to_csv(out_csv, index=False)
-print(f"saved    {out_csv}")
+print("saved  ", out_csv)
