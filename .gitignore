@@ -11,3 +11,4 @@ data/imaging_raw/
 external/mlperf_gpu/
 data/**/*.csv
 backups/
+backups/
