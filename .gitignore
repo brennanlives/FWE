@@ -13,3 +13,7 @@ data/**/*.csv
 backups/
 backups/
 backups/
+
+# Never track backups
+backups/
+
