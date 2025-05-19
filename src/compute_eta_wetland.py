@@ -8,7 +8,7 @@ OUT = "results/eta_wetland.csv"
 
 def main() -> None:
     # 1 ─ read the file, ignoring comment lines that start with “#”
-    df = pd.read_csv(RAW)
+    df = pd.read_csv(RAW, comment="#")
 
     # 2 ─ build a datetime index from TIMESTAMP_START (yyyymmddHHMM)
     df["time"] = pd.to_datetime(df["TIMESTAMP_START"], format="%Y%m%d%H%M")
