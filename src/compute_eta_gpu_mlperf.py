@@ -1,24 +1,21 @@
 import sys, pathlib, pandas as pd
 
-src, dst = map(pathlib.Path, sys.argv[1:3])
-df = pd.read_csv(src, low_memory=False)          # raw_data.csv
+inf_path, pwr_path, out_path = map(pathlib.Path, sys.argv[1:4])
+inf = pd.read_csv(inf_path, low_memory=False)
+pwr = pd.read_csv(pwr_path, low_memory=False)
 
-# ── isolate the rows we need ─────────────────────────────────────────────
-is_bert   = df["Model"].str.contains("bert", case=False, na=False)
-is_power  = df["perf_units"].str.strip().eq("W")
-is_rate   = df["perf_units"].str.contains(r"/s",  na=False)   # tokens/s or samples/s
+key = ["Public ID", "Scenario", "SystemName", "Model"]
 
-perf  = df[is_bert & is_rate ].copy()            # throughput rows
-power = df[is_bert & is_power].copy()            # average-power rows
+inf = inf[inf["Model"].str.fullmatch(r"(?i)bert-99\.9", na=False)]
+pwr = pwr[pwr["Model"].str.fullmatch(r"(?i)bert-99\.9", na=False)]
 
-key = ["Public ID", "Scenario", "SystemName", "Model"]        # join key
-merged = pd.merge(perf, power, on=key, suffixes=("_perf", "_pow"))
+merged = pd.merge(inf, pwr[key + ["avg_power_w"]], on=key, how="inner")
+bits = 384 * 32            # one BERT token = 384×32 bits
+merged["scale"] = merged["Result"]          # tokens · s⁻¹
+merged["eta"]   = bits * merged["Result"] / merged["avg_power_w"]
 
-# ── compute η  (bits · J⁻¹) ─────────────────────────────────────────────
-bits = 384 * 32                                  # one BERT token = 384×32 bits
-merged["scale"] = merged["perf_result_perf"]     # tokens s⁻¹
-merged["eta"]   = bits * merged["perf_result_perf"] / merged["perf_result_pow"]
-
-out = merged[["scale", "eta"]].sort_values("scale")
-out.to_csv(dst, index=False)
-print(f"η spectrum written to {dst}  (rows = {len(out)})")
+out = merged[["scale", "eta"]].dropna().sort_values("scale")
+if out.empty:
+    sys.exit("No matching rows with power data found.")
+out.to_csv(out_path, index=False)
+print(f"η spectrum → {out_path}   rows={len(out)}")
